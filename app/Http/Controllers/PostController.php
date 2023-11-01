@@ -7,10 +7,7 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Repositories\PostRepository;
-use App\Rules\IntegerArray;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -42,37 +39,17 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $pageSize = $request->page_size ?? 20;
+
         $posts = Post::query()->paginate($pageSize);
 
         return PostResource::collection($posts);
     }
 
-    public function store(Request $request, PostRepository $repository)
+    public function store(StorePostRequest $request, PostRepository $repository)
     {
-        // TODO refactor this to a form request
-        $payload = $request->only([
-            'title',
-            'body',
-            'user_ids'
-        ]);
-        Validator::validate($payload, [
-            'title' => 'string|required',
-            'body' => ['array', 'required'],
-            'user_ids' => [
-                'array',
-                'required',
-                new IntegerArray(),
-            ]
-        ], [
-            'body.required' => "Please enter a value for body.",
-            'title.string' => 'Use a string',
-        ], [
-            'user_ids' => 'USER ID'
-        ]);
+        $created = $repository->create($request->toArray());
 
-        $created = $repository->create($payload);
-
-        return new PostResource($created);
+        return $this->success('Discount created successfully', new PostResource($created));
     }
 
 
@@ -82,24 +59,19 @@ class PostController extends Controller
     }
 
 
-    public function update(Request $request, Post $post, PostRepository $repository)
+    public function update(UpdatePostRequest $request, Post $post, PostRepository $repository)
     {
-        $post = $repository->update($post, $request->only([
-            'title',
-            'body',
-            'user_ids',
-        ]));
-        return new PostResource($post);
+        $post = $repository->update($post, $request->toArray());
 
+        return $this->success('Post updated successfully', new PostResource($post));
     }
 
 
     public function destroy(Post $post, PostRepository $repository)
     {
         $post = $repository->forceDelete($post);
-        return new JsonResponse([
-            'data' => 'success'
-        ]);
+
+        return $this->success('Post deleted successfully');
     }
 
 }

@@ -16,6 +16,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->word,
+            'photo' => $this->faker->imageUrl,
             'body' => ['abc'],
         ];
     }

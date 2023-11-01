@@ -49,6 +49,11 @@ class AuthController extends Controller
         ]);
     }
 
+    public function user(Request $request)
+    {
+        return $this->response(new UserResource($request->user()));
+    }
+
     // change password
     public function changePassword(Request $request)
     {
@@ -78,11 +83,6 @@ class AuthController extends Controller
             }
         }
         return \Response::json($arr);
-    }
-
-    public function user(Request $request)
-    {
-        return $this->response(new UserResource($request->user()));
     }
 
     public function forgetPassword(Request $request)
