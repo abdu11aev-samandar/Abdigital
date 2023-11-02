@@ -17,14 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')
-    ->middleware([
-        'auth:sanctum'
-    ])
-    ->group(function (){
-        RouteHelper::includeRouteFiles(__DIR__ . '/api/v1');
-    });
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResources([
+    'posts' => PostController::class,
+]);

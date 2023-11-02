@@ -1,0 +1,70 @@
+version: '3.8'
+services:
+    web:
+        container_name: web-abdigital
+        image: nginx:latest
+        networks:
+            - default
+        ports:
+            - "1050:80"
+        volumes:
+            - ./:/abdigital
+            - ./docker/ngnix/default.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - database
+            - php
+
+    php:
+        build:
+            context: ./docker/php
+            dockerfile: Dockerfile
+        container_name: php-abdigital
+        working_dir: /abdigital/
+        restart: always
+        networks:
+            - default
+        volumes:
+            - ./:/abdigital
+            - ./docker/php/php.ini:/usr/local/etc/php/php.ini:ro
+        expose:
+            - "9000"
+        command: >
+            bash -c "true
+            && composer install
+            && php artisan key:generate
+            && php artisan migrate
+            && docker-php-entrypoint php-fpm
+            "
+
+    database:
+        container_name: database-abdigital
+        image: mysql:5.7
+        restart: always
+        ports:
+            - "3346:3306"
+        networks:
+            - default
+        environment:
+            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+        volumes:
+            - ./docker/data:/docker-entrypoint-initdb.d
+    phpmyadmin:
+        image: phpmyadmin
+        container_name: phpmyadmin-abdigital
+        networks:
+            - default
+        restart: always
+        depends_on:
+            - database
+        ports:
+            - "1051:80"
+        environment:
+            - PMA_HOST=${DB_HOST}
+            - PMA_USER=${DB_USERNAME}
+            - PMA_PASSWORD=${DB_PASSWORD}
+
+volumes:
+    persistent:
