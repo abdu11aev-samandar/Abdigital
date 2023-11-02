@@ -1,66 +1,56 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## About project
+What is Project?
+<br />
+This project test task for Backend developer.
+### Stacks
+1. <a href="https://www.php.net/releases/8.1/en.php" target="_blank">PHP-8.1.3v<a/>. Framework <a href="https://laravel.com/docs/9.x/releases#laravel-9" target="_blank">Laravel 9</a>.
+2. <a href="https://dev.mysql.com/downloads/mysql/5.7.html" taget="_blank">MySQL 5.7</a>.
+3. <a href="https://nginx.org/en/download.html">Nginx-latest</a>.
+### Installation guide
+Before installation set up your <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" target="_blank">SSH keys on Github</a> and <a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank">Docker</a>.
+<br />
+### Steps (with Docker):
+``$ git clone git@github.com:xkas01/Abdigital.git``
+<br />
+``$ cd Abdigital``
+<br />
+``$ cp .env.example .env``
+<br />
+``$ docker-compose up --build -d``
+<br />
+Also our system have dashboard for database (phpMyAdmin).
+<br />
+``$ open http://localhost:1051``
+<br />
+Username: ``abdigital``
+<br />
+Password: ``abdigital``
+<br />
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Docker container's shell
+PHP:
+<br />
+``$ docker exec -it php-abdigital /bin/sh``
+<br />
+Database:
+<br />
+``$ docker exec -it database-abdigital /bin/sh``
 
-## About Laravel
+### Documentation for API
+Local URL:
+<br />
+``abdigital/docs/Abdigital.postman_collection.json``
+<br />
+Aritsan command for regenerate:
+<br />
+1. ``$ docker exec -it php-abdigital /bin/sh``
+2. ``$ php artisan migrate:refresh --seed``
+3. Simple one line command: ``$ docker exec -it php-abdigital php artisan migrate:refresh --seed``
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## <a href="https://dev.to/dotmarn/how-to-send-application-logs-to-telegram-in-laravel-1l12" target="_blank">Laravel error logging + Telegram bot<a/>
+### .env
+- TELEGRAM_API_KEY = "Your bot token"
+- TELEGRAM_CHANNEL = "@Your_channel_name"
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Structure of Database
+![alt text](docs/img.png)

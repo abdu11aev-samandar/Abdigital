@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class GeneralJsonException extends Exception
 {
@@ -11,6 +12,9 @@ class GeneralJsonException extends Exception
 
     public function render($request)
     {
+        // Log an alert message
+        Log::alert('An alert message goes here: ' . $this->getMessage());
+
         return new JsonResponse([
             'errors' => [
                 'message' => $this->getMessage(),
